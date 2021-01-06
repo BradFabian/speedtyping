@@ -6,6 +6,7 @@ function App() {
 
   const [textInput, setTextInput ] = useState('');
   const [timerValue, setTimerValue] = useState(25);
+  const [startCount, setStartCount] = useState(false);
 
   function handleChange(e) {
     const {value} = e.target
@@ -18,12 +19,14 @@ function App() {
  }
 
  useEffect(() => {
-   if(timerValue > 0){
-    setTimeout(() => {setTimerValue(time => time -1)}, 1000);
+   if(startCount && timerValue > 0){
+    setTimeout(() => {setTimerValue(time => time - 1)}, 1000);
+   } else if(timerValue === 0) {
+     setStartCount(false)
    }
   
    
- }, [timerValue])
+ }, [timerValue, startCount])
 
   return (
 
@@ -34,7 +37,7 @@ function App() {
 
       </textarea>
       <h4>Time remaining: {timerValue}</h4>
-      <button onClick={() => calculateWordCount(textInput)}>Start</button>
+      <button onClick={() => setStartCount(true)}>Start</button>
       <h1> Word Count: </h1>
     </div>
   );
