@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import ReactTypingEffect from 'react-typing-effect';
 import './App.css';
 
@@ -11,6 +11,7 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState(STARTING_TIME)
   const [isTimeRunning, setIsTimeRunning] = useState(false)
   const [wordCount, setWordCount] = useState(0)
+  const textRef = useRef(null);
   
   function handleChange(e) {
       const {value} = e.target
@@ -27,6 +28,8 @@ function App() {
       setTimeRemaining(STARTING_TIME)
       setText("")
       setWordCount(0)
+      textRef.current.disabled = false
+      textRef.current.focus();
   }
   
   function endGame() {
@@ -53,7 +56,7 @@ function App() {
     <div className="App">
       
       <h1>How fast can you type?</h1>
-      <textarea value={text} disabled={!isTimeRunning} onChange={handleChange}>
+      <textarea ref={textRef} value={text} disabled={!isTimeRunning} onChange={handleChange}>
 
       </textarea>
       <h4>Time remaining: {timeRemaining}</h4>
